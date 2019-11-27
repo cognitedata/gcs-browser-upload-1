@@ -1,4 +1,3 @@
-import { Promise } from 'es6-promise';
 import SparkMD5 from 'spark-md5';
 import debug from './debug';
 
