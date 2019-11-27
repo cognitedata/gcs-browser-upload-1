@@ -25,11 +25,11 @@ class FileProcessor {
     this.unpauseHandlers = [];
   }
 
-  waitForUnpause = async () => {
-    return new Promise(resolve => {
-      this.unpauseHandlers.push(resolve);
-    });
-  };
+  // waitForUnpause = async () => {
+  // return new Promise(resolve => {
+  // this.unpauseHandlers.push(resolve);
+  // });
+  // };
 
   async run(fn, startIndex = 0, endIndex) {
     const { file, chunkSize } = this;
@@ -47,7 +47,7 @@ class FileProcessor {
         return true;
       }
       if (this.paused) {
-        await this.waitForUnpause();
+        // await this.waitForUnpause();
       }
 
       const start = index * chunkSize;
