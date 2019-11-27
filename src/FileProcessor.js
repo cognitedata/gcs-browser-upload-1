@@ -45,7 +45,7 @@ class FileProcessor {
     const processIndex = async index => {
       if (index === totalChunks || index === endIndex) {
         debug('File process complete');
-        return;
+        return true;
       }
       if (this.paused) {
         await this.waitForUnpause();
@@ -58,8 +58,11 @@ class FileProcessor {
 
       const shouldContinue = await fn(checksum, index, chunk);
       if (shouldContinue !== false) {
-        await processIndex(index + 1);
+        // IMPORTANT: We must return here without await. Otherwise we will leak memory
+        // because this function will remain and wait for the next call to processIndex.
+        return processIndex(index + 1);
       }
+      return false;
     };
 
     await processIndex(startIndex);
